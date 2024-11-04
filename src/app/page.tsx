@@ -66,18 +66,18 @@ export default function Home() {
                   <div>
                     {Object.entries(row).map(([key, value], idx) => (
                       <div key={idx} className="flex">
-                        <span className="font-bold mr-2">{key}:</span>
                         <span>{value as string}</span>
                       </div>
                     ))}
                   </div>
-                  <button
-                    className="bg-blue-500 text-white p-2 rounded ml-4"
-                    onClick={() => handleAddCompetingTeam(Object.values(row)[0])} // Assuming the first value is the team ID
-                    // onClick={()=>console.log(Object.values(row)[0])}
-                  >
-                    Add to Alliance
-                  </button>
+                    {CaptainData.length > 0 && (
+                    <button
+                      className="bg-blue-500 text-white p-2 rounded ml-4"
+                      onClick={() => handleAddCompetingTeam(Object.values(row)[0])} // Assuming the first value is the team ID
+                    >
+                      Add to Alliance
+                    </button>
+                    )}
                 </li>
               ))}
             </ul>
