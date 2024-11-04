@@ -19,14 +19,15 @@ import {
 } from "@/components/ui/dialog";
 
 export default function Home() {
-  const { data } = useCSV();
-  const { CaptainData } = useCaptain();
+  const { data, setData } = useCSV();
+  const { CaptainData,setCaptainData } = useCaptain();
   const [open, setOpen] = useState(!data);
 
-  console.log(data);
-  if(data.length === 0) {
+  // console.log(CaptainData);
+  if(data.length === 0 && CaptainData.length === 0) {
     return (
       <div className="flex flex-col h-screen items-center justify-center">
+        <h1 className="text-3xl font-thin py-5">San Diego FIRST Tech Challenge League Meet Alliance Selection</h1>
         <Dialog open={open} onOpenChange={setOpen} defaultOpen={!data}>
           <DialogTrigger className="text-xl bg-orange-400 p-10 rounded-lg">Open</DialogTrigger>
           <DialogContent>
@@ -42,75 +43,62 @@ export default function Home() {
       </div>
     );
   }
-  else return (
+  const handleAddCompetingTeam = (teamId) => {
+    const nextEmptyIndex = CaptainData.findIndex(entry => !entry.partner);
+    console.log(nextEmptyIndex);
+    if (nextEmptyIndex !== -1) {
+      const newCaptainData = [...CaptainData];
+      newCaptainData[nextEmptyIndex] = { captain:CaptainData[nextEmptyIndex].captain, partner: teamId };
+      console.log(newCaptainData[nextEmptyIndex]) // Populate the next empty alliance with the selected team
+      setCaptainData(newCaptainData);
+
+      const remainingData = data.filter(entry => Object.values(entry)[0] !== teamId);
+      setData(remainingData);
+    }
+  };
+  return (
     <div className="grid grid-cols-2 w-screen p-10">
         {data && data.length > 0 ? (
           <div className="overflow-auto w-full p-5">
-            <table className="table-auto border-collapse border border-gray-400 w-full">
-              <thead>
-                <tr>
-                  {Object.keys(data[0]).map((key) => (
-                    <th key={key} className="border border-gray-300 px-4 py-2">
-                      Competing Teams
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {data.map((row, index) => (
-                  <tr key={index}>
-                    {Object.values(row).map((value, idx) => (
-                      <td
-                        key={idx}
-                        className="border border-gray-300 px-4 py-2"
-                      >
-                        {value}
-                      </td>
+            <ul className="list-disc list-inside">
+              {data.map((row, index) => (
+                <li key={index} className="mb-2 flex justify-between items-center">
+                  <div>
+                    {Object.entries(row).map(([key, value], idx) => (
+                      <div key={idx} className="flex">
+                        <span className="font-bold mr-2">{key}:</span>
+                        <span>{value}</span>
+                      </div>
                     ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                  </div>
+                  <button
+                    className="bg-blue-500 text-white p-2 rounded ml-4"
+                    onClick={() => handleAddCompetingTeam(Object.values(row)[0])} // Assuming the first value is the team ID
+                    // onClick={()=>console.log(Object.values(row)[0])}
+                  >
+                    Add to Alliance
+                  </button>
+                </li>
+              ))}
+            </ul>
           </div>
         ) : (
           <p>No data available</p>
         )}
         <div>
           <h2 className=" text-2xl">Dashboard</h2>
-          <SetCaptain />
-          {CaptainData && CaptainData.length > 0 ? (
-            <div className="overflow-auto w-full p-5">
-              <table className="table-auto border-collapse border border-gray-400 w-full">
-                <thead>
-                  <tr>
-                    {Object.keys(data[0]).map((key) => (
-                      <th
-                        key={key}
-                        className="border border-gray-300 px-4 py-2"
-                      >
-                        Captains
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {CaptainData.map((row, index) => (
-                    <tr key={index}>
-                      {Object.values(row).map((value, idx) => (
-                        <td
-                          key={idx}
-                          className="border border-gray-300 px-4 py-2"
-                        >
-                          {value}
-                        </td>
-                      ))}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+          {!CaptainData || CaptainData.length === 0 ? <SetCaptain /> : null}
+          {CaptainData && CaptainData.length > 0 && (
+            <div className="mt-5">
+              <h2 className="text-2xl font-medium">Selected Captains</h2>
+              <ul className="list-disc list-inside">
+                {CaptainData.map((entry, index) => (
+                  <li key={index}>
+                    Captain: {entry.captain}, Partner: {entry.partner}
+                  </li>
+                ))}
+              </ul>
             </div>
-          ) : (
-            <p>No data available</p>
           )}
         </div>
       </div>

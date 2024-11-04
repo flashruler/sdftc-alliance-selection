@@ -1,16 +1,20 @@
-// components/CSVContext.tsx
 "use client"
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 
+interface CaptainDataType {
+  captain: number;
+  partner: number;
+}
+
 interface CSVContextType {
   CaptainData: any[];
-  setCaptainData: (data: any[]) => void;
+  setCaptainData: (data: CaptainDataType[]) => void;
 }
 
 const CaptainContext = createContext<CSVContextType | undefined>(undefined);
 
 export const CaptainProvider = ({ children }: { children: ReactNode }) => {
-  const [CaptainData, setCaptainData] = useState<any[]>([]);
+  const [CaptainData, setCaptainData] = useState<CaptainDataType[]>([]);
 
   // Ensure state is consistent between server and client
   useEffect(() => {
@@ -18,7 +22,7 @@ export const CaptainProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   return (
-    <CaptainContext.Provider value={{CaptainData, setCaptainData }}>
+    <CaptainContext.Provider value={{ CaptainData, setCaptainData }}>
       {children}
     </CaptainContext.Provider>
   );
@@ -27,7 +31,7 @@ export const CaptainProvider = ({ children }: { children: ReactNode }) => {
 export const useCaptain = () => {
   const context = useContext(CaptainContext);
   if (!context) {
-    throw new Error('useCSV must be used within a CSVProvider');
+    throw new Error('useCaptain must be used within a CaptainProvider');
   }
   return context;
 };
