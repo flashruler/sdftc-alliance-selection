@@ -3,8 +3,8 @@
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 
 interface CaptainDataType {
-  captain: number;
-  partner: number;
+  captain: any;
+  partner: any;
 }
 
 interface CSVContextType {

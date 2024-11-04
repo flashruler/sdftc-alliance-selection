@@ -1,4 +1,4 @@
-/* eslint-disable */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 import React, { useEffect, useState } from 'react';
 import { useCaptain } from './CaptainContext';
@@ -15,7 +15,8 @@ export default function SetCaptain() {
             const selectedEntries = sampleSize(data, 8).map(entry => {
                 const captainNumber = Object.values(entry)[0]; // Get the first value in the object
                 return {
-                    captain: captainNumber
+                    captain: captainNumber,
+                    partner: null
                 };
             });
 
