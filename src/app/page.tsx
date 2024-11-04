@@ -43,7 +43,7 @@ export default function Home() {
       </div>
     );
   }
-  const handleAddCompetingTeam = (teamId) => {
+  const handleAddCompetingTeam = (teamId:number) => {
     const nextEmptyIndex = CaptainData.findIndex(entry => !entry.partner);
     console.log(nextEmptyIndex);
     if (nextEmptyIndex !== -1) {
