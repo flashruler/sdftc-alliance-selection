@@ -67,7 +67,7 @@ export default function Home() {
                     {Object.entries(row).map(([key, value], idx) => (
                       <div key={idx} className="flex">
                         <span className="font-bold mr-2">{key}:</span>
-                        <span>{value}</span>
+                        <span>{value as string}</span>
                       </div>
                     ))}
                   </div>
