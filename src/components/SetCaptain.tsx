@@ -5,7 +5,7 @@ import { useCSV } from './CSVContext';
 import { sampleSize } from 'lodash';
 
 export default function SetCaptain() {
-    const { CaptainData, setCaptainData } = useCaptain();
+    const {setCaptainData } = useCaptain();
     const { data, setData } = useCSV(); // Assuming useCSV provides setData to update the data state
     const [trigger, setTrigger] = useState(false);
 

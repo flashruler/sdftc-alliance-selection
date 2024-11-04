@@ -6,8 +6,6 @@ import { CaptainProvider } from "../components/CaptainContext";
 import { TeamProvider } from "@/components/AllianceContext";
 
 import { Roboto } from "next/font/google";
-import Image from "next/image";
-import { GitHubLogoIcon } from "@radix-ui/react-icons";
 
 const roboto = Roboto({
   weight: ["400", "700"],

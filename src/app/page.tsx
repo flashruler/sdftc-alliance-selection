@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import dynamic from "next/dynamic";
 const CSVUploader = dynamic(() => import("@/components/CSVUploader"), {
   ssr: false,
@@ -11,7 +11,6 @@ import SetCaptain from "@/components/SetCaptain";
 import {
   Dialog,
   DialogContent,
-  DialogClose,
   DialogDescription,
   DialogHeader,
   DialogTitle,
