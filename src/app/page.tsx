@@ -90,6 +90,7 @@ export default function Home() {
           {!CaptainData || CaptainData.length === 0 ? <SetCaptain /> : null}
           {CaptainData && CaptainData.length > 0 && (
             <div className="mt-5">
+              <SetCaptain />
               <h2 className="text-2xl font-medium">Selected Captains</h2>
               <ul className="list-disc list-inside">
                 {CaptainData.map((entry, index) => (

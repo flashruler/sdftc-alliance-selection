@@ -21,13 +21,13 @@ export default function SetCaptain() {
             });
 
             // Filter out the selected entries from the data
-            const remainingData = data.filter(entry => {
-                const captainNumber = Object.values(entry)[0];
-                return !selectedEntries.some(selected => selected.captain === captainNumber);
-            });
+            // const remainingData = data.filter(entry => {
+            //     const captainNumber = Object.values(entry)[0];
+            //     return !selectedEntries.some(selected => selected.captain === captainNumber);
+            // });
 
             setCaptainData(selectedEntries);
-            setData(remainingData); // Update the data state with the remaining entries
+            // setData(remainingData); // Update the data state with the remaining entries
             setTrigger(false); // Reset trigger
         }
     }, [data, setCaptainData, setData, trigger]);
